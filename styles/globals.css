@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --plant-dark: rgb(62, 101, 83);
+  --gold-dark: rgb(175, 170, 154);
+}
+
 .input-like {
   @apply absolute top-0 left-0 w-full h-full bg-transparent border-none outline-none z-[1] p-4 pl-0;
 }

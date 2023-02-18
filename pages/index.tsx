@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import * as Slider from "@radix-ui/react-slider";
 import ThemePicker from "../components/ThemePicker";
 
 export default function Home() {
   const [theme, setTheme] = useState("plant");
   const [images, setImages] = useState([]);
+  const [scale, setScale] = useState(50);
 
   useEffect(() => {
     // https://web.dev/patterns/files/
@@ -76,7 +78,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="grid grid-cols-4 xl:grid-cols-5 print:grid-cols-3">
+    <div
+      className={clsx(
+        "grid grid-cols-4 xl:grid-cols-5 print:grid-cols-3",
+        `text-${theme}`
+      )}
+    >
       <aside className="pb-12 print:hidden">
         <div className="px-8 py-6">
           <div
@@ -105,8 +112,41 @@ export default function Home() {
             rainer
           </div>
         </div>
-        <div className="px-8">
+        <div className="px-8 space-y-4">
           <ThemePicker activeTheme={theme} onChange={setTheme} />
+          <div>
+            <Slider.Root
+              className="col-span-2 flex relative items-center select-none  touch-none  h-8"
+              defaultValue={[50]}
+              max={100}
+              step={1}
+              onValueChange={(v) => {
+                setScale(v[0]);
+              }}
+              aria-label="Volume"
+            >
+              <Slider.Track
+                className={clsx(
+                  "relative flex-1 rounded-full h-2",
+                  ` bg-${theme}`
+                )}
+              >
+                <Slider.Range
+                  className={clsx(
+                    "absolute rounded-full h-full",
+                    `bg-${theme}-dark`
+                  )}
+                />
+              </Slider.Track>
+              <Slider.Thumb
+                className={clsx(
+                  "block w-4 h-4 shadow rounded focus:outline-none",
+                  `bg-${theme}-dark`
+                )}
+              />
+            </Slider.Root>
+            <div className="font-bold  text-sm ">缩放:{scale / 50}</div>
+          </div>
         </div>
       </aside>
       <div className="col-span-3 border-l border-l-slate-200 print:border-none  dark:border-l-slate-700 xl:col-span-4">
@@ -117,7 +157,12 @@ export default function Home() {
               `text-${theme} bg-${theme}`
             }
           >
-            <div className=" border-white p-4 inline-flex gap-4  row-span-3 col-span-6">
+            <div
+              className={clsx(
+                "p-4 inline-flex gap-4  row-span-3 col-span-6",
+                `border-[var(--${theme}-dark)]`
+              )}
+            >
               <div
                 className={clsx(
                   "font-bold flex items-center justify-center h-36 w-28 rounded",
@@ -127,17 +172,23 @@ export default function Home() {
                   }
                 )}
               >
-                {images.length === 0
-                  ? "粘贴图片"
-                  : images.map((e, i) => (
-                      <img
-                        className="rounded"
-                        key={i}
-                        src={URL.createObjectURL(e)}
-                      ></img>
-                    ))}
+                {images.length === 0 ? (
+                  "粘贴图片"
+                ) : (
+                  <img
+                    className="rounded"
+                    src={URL.createObjectURL(images[0])}
+                    // 50 => 1.0
+                    // 0=>0
+                    // 100 =>2.0
+                    style={{ transform: `scale(${scale / 50})` }}
+                  ></img>
+                )}
               </div>
-              <div className="border-l-2 border-white flex-[5] px-4 h-40">
+              <div
+                className={clsx("border-l-2 border-white flex-[5] px-4 h-40")}
+                // style={{ borderColor: `var(--${theme}-dark)`, }}
+              >
                 <h2 className="relative h-12">
                   <input
                     type="text"
@@ -154,9 +205,7 @@ export default function Home() {
                     className="resize-none input-like"
                     // rows={6}
                   />
-                  <label htmlFor="detail">
-                    详情
-                  </label>
+                  <label htmlFor="detail">详情</label>
                 </div>
               </div>
             </div>
