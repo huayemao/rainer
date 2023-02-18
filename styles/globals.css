@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input-like {
+  @apply absolute top-0 left-0 w-full h-full bg-transparent border-none outline-none z-[1] p-4 pl-0;
+}
+
+label {
+  @apply absolute top-[.75em] w-full transition-all  text-sm;
+}
+
+.input-like:focus + label {
+  @apply text-sm left-0 z-10 top-[-.75em];
+  @apply opacity-0;
+}
+
+/*Input focus sticky top label*/
+.input-like:not(:placeholder-shown).input-like:not(:focus) + label {
+  @apply text-sm left-0 z-10 top-[-.75em];
+  @apply opacity-0;
+}
+
+.text-gold {
+  color: hsl(46deg 22% 51%);
+}
+
+.bg-gold {
+  background-color: rgb(244, 241, 236);
+}
+
+.bg-gold-dark {
+  background-color: rgb(175, 170, 154);
+}
+
+.text-plant {
+  color: rgb(62, 101, 83);
+}
+
+.bg-plant {
+  background-color: rgb(230, 239, 235);
+}
+
+.bg-plant-dark {
+  background-color: rgb(62, 101, 83);
+}
