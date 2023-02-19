@@ -1,27 +1,5 @@
-# Radix UI Example
+a tool to generate a simple watering scheudle
 
-This example showcases a few basic Radix UI components
+upload a image of your plant, and print the web page to get a minimalist schedule. you can then print it to paper and paste it somewhere in your house. Every time you water your plant, take a record of it.
 
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/radix-ui&project-name=radix-ui&repository-name=radix-ui)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
-```bash
-npx create-next-app --example radix-ui radix-ui-app
-```
-
-```bash
-yarn create next-app --example radix-ui radix-ui-app
-```
-
-```bash
-pnpm create next-app --example radix-ui radix-ui-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+just this old school 👀.
