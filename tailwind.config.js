@@ -6,6 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    data: {
+      // https://tailwindcss.com/docs/hover-focus-and-other-states
+      checked: 'data-state="checked"',
+    },
   },
   plugins: [],
 }

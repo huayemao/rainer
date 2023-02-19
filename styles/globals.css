@@ -49,3 +49,15 @@ label {
 .bg-plant-dark {
   background-color: rgb(62, 101, 83);
 }
+
+.SwitchThumb[data-state="checked"] {
+  transform: translateX(19px);
+}
+
+.switch-gold.SwitchRoot[data-state="checked"] {
+  background-color: var(--gold-dark);
+}
+
+.switch-plant.SwitchRoot[data-state="checked"] {
+  background-color: var(--plant-dark);
+}

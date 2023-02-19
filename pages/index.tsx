@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import ThemePicker from "../components/ThemePicker";
 import { MySlider } from "../components/MySlider";
+import * as Switch from "@radix-ui/react-switch";
 import Head from "next/head";
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
   const [scale, setScale] = useState(50);
   const [translateX, setTranslateX] = useState(50);
   const [translateY, setTranslateY] = useState(50);
+  const [enableShadow, setEnableShadow] = useState(false);
 
   const getScaleValue = (v) => v / 50;
   const getTraslateValue = (v) => v - 50 + "px";
@@ -157,6 +159,31 @@ export default function Home() {
               }}
               value={translateY}
             />
+            <hr></hr>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label
+                className="static font-bold"
+                htmlFor="add-shadow"
+                style={{ paddingRight: 15 }}
+              >
+                图片阴影
+              </label>
+              <Switch.Root
+                checked={enableShadow}
+                onCheckedChange={setEnableShadow}
+                className={clsx(
+                  "w-12 h-6 bg-slate-200 rounded-full relative shadow focus:shadow-lg  SwitchRoot ",
+                  {
+                    [`switch-${themeColor}`]: true,
+                  }
+                )}
+                // style={{ WebkitTapHighlightColor: "black" }}
+                id="add-shadow"
+              >
+                {/* https://tailwindcss.com/docs/hover-focus-and-other-states */}
+                <Switch.Thumb className="block w-5 h-5 bg-white rounded-full shadow transition translate-x-[2px] will-change-transform SwitchThumb" />
+              </Switch.Root>
+            </div>
           </div>
         </aside>
         <div className="col-span-3 border-l border-l-slate-200 print:border-none  dark:border-l-slate-700 xl:col-span-4">
@@ -176,21 +203,23 @@ export default function Home() {
                 <div
                   className={clsx(
                     "font-bold flex items-center justify-center h-36 w-28 rounded",
-                    // todo: 自定义是否添加阴影
                     {
                       "bg-white": images.length === 0,
+                      // "shadow-lg": enableShadow,
                     }
                   )}
+                  style={{
+                    transform: `scale(${scaleV}) translate(${translateXV},${translateYV})`,
+                  }}
                 >
                   {images.length === 0 ? (
                     <div className="p-4">粘贴图片或将图片拖拽至此</div>
                   ) : (
                     <img
-                      className="rounded"
+                      className={clsx("rounded", {
+                        "shadow-lg": enableShadow,
+                      })}
                       src={URL.createObjectURL(images[0])}
-                      style={{
-                        transform: `scale(${scaleV}) translate(${translateXV},${translateYV})`,
-                      }}
                     ></img>
                   )}
                 </div>
@@ -220,6 +249,7 @@ export default function Home() {
               </div>
               {Array.from({ length: 30 }, (_, i) => i + 1).map((e) => (
                 <div
+                  key={e}
                   className={clsx(
                     " bg-white h-16 w-20 p-1 text-right font-bold inline-block",
                     `text-${themeColor}-dark`
