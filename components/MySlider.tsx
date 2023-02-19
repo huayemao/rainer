@@ -16,7 +16,7 @@ export function MySlider({
     <div>
       <Slider.Root
         className="col-span-2 flex relative items-center select-none  touch-none  h-8"
-        defaultValue={[value]}
+        value={[value]}
         max={100}
         step={1}
         onValueChange={onValueChange}
@@ -38,6 +38,9 @@ export function MySlider({
       </Slider.Root>
       <div className="font-bold  text-sm ">
         {label}
+        <button className="float-right" onClick={() => onValueChange([50])}>
+          还原
+        </button>
       </div>
     </div>
   );
