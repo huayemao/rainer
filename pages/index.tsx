@@ -87,23 +87,33 @@ export default function Home() {
   }, []);
 
   return (
-    <div
-      className={clsx(
-        "grid grid-cols-4 xl:grid-cols-5 print:grid-cols-3",
-        `text-${themeColor}`
-      )}
-    >
-      <aside className="pb-12 print:hidden">
-        <div className="px-8 py-6">
-          <div
-            className={clsx(
-              "flex gap-2 items-center text-2xl font-semibold tracking-tight",
-              `text-${themeColor}`
-            )}
-          >
+    <>
+      <Head>
+        <title>Rainer-浇花日程表创建工具</title>
+        <meta
+          name="description"
+          content="a web tool to build a minimalist watering scheduler"
+        />
+        <meta name="author" content="huayemao" />
+        <meta name="keywords" content="watering, schedule, pwa" />
+      </Head>
+      <div
+        className={clsx(
+          "grid grid-cols-4 xl:grid-cols-5 print:grid-cols-3",
+          `text-${themeColor}`
+        )}
+      >
+        <aside className="pb-12 print:hidden">
+          <div className="px-8 py-6">
             <div
-              dangerouslySetInnerHTML={{
-                __html: `<svg
+              className={clsx(
+                "flex gap-2 items-center text-2xl font-semibold tracking-tight",
+                `text-${themeColor}`
+              )}
+            >
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: `<svg
               class="icon"
               style="width: 1em;height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
               viewBox="0 0 1024 1024"
@@ -116,111 +126,112 @@ export default function Home() {
                 p-id="2012"
               ></path>
             </svg>`,
-              }}
-            />
-            rainer
+                }}
+              />
+              Rainer
+            </div>
           </div>
-        </div>
-        <div className="px-8 space-y-4">
-          <ThemePicker activeTheme={themeColor} onChange={setThemeColor} />
-          <MySlider
-            label={`缩放：${scaleV}`}
-            theme={themeColor}
-            onValueChange={(v) => {
-              setScale(v[0]);
-            }}
-            value={scale}
-          />
-          <MySlider
-            label={`水平偏移：${translateXV}`}
-            theme={themeColor}
-            onValueChange={(v) => {
-              setTranslateX(v[0]);
-            }}
-            value={translateX}
-          />
-          <MySlider
-            label={`垂直偏移：${translateYV}`}
-            theme={themeColor}
-            onValueChange={(v) => {
-              setTranslateY(v[0]);
-            }}
-            value={translateY}
-          />
-        </div>
-      </aside>
-      <div className="col-span-3 border-l border-l-slate-200 print:border-none  dark:border-l-slate-700 xl:col-span-4">
-        <div className="w-[794px] h-[559px] px-8 py-4 ml-12 print:mx-0 print:py-0">
-          <div
-            className={
-              "p-6 shadow-lg grid grid-cols-8 gap-2 " +
-              `text-${themeColor} bg-${themeColor}`
-            }
-          >
+          <div className="px-8 space-y-4">
+            <ThemePicker activeTheme={themeColor} onChange={setThemeColor} />
+            <MySlider
+              label={`缩放：${scaleV}`}
+              theme={themeColor}
+              onValueChange={(v) => {
+                setScale(v[0]);
+              }}
+              value={scale}
+            />
+            <MySlider
+              label={`水平偏移：${translateXV}`}
+              theme={themeColor}
+              onValueChange={(v) => {
+                setTranslateX(v[0]);
+              }}
+              value={translateX}
+            />
+            <MySlider
+              label={`垂直偏移：${translateYV}`}
+              theme={themeColor}
+              onValueChange={(v) => {
+                setTranslateY(v[0]);
+              }}
+              value={translateY}
+            />
+          </div>
+        </aside>
+        <div className="col-span-3 border-l border-l-slate-200 print:border-none  dark:border-l-slate-700 xl:col-span-4">
+          <div className="w-[794px] h-[559px] px-8 py-4 ml-12 print:mx-0 print:py-0">
             <div
-              className={clsx(
-                "p-4 inline-flex gap-4  row-span-3 col-span-6",
-                `border-[var(--${themeColor}-dark)]`
-              )}
+              className={
+                "p-6 shadow-lg grid grid-cols-8 gap-2 " +
+                `text-${themeColor} bg-${themeColor}`
+              }
             >
               <div
                 className={clsx(
-                  "font-bold flex items-center justify-center h-36 w-28 rounded",
-                  // todo: 自定义是否添加阴影
-                  {
-                    "bg-white": images.length === 0,
-                  }
+                  "p-4 inline-flex gap-4  row-span-3 col-span-6",
+                  `border-[var(--${themeColor}-dark)]`
                 )}
               >
-                {images.length === 0 ? (
-                  <div className="p-4">粘贴图片或将图片拖拽至此</div>
-                ) : (
-                  <img
-                    className="rounded"
-                    src={URL.createObjectURL(images[0])}
-                    style={{
-                      transform: `scale(${scaleV}) translate(${translateXV},${translateYV})`,
-                    }}
-                  ></img>
-                )}
-              </div>
-              <div
-                className={clsx("border-l-2 border-white flex-[5] px-4 h-40")}
-                // style={{ borderColor: `var(--${theme}-dark)`, }}
-              >
-                <h2 className="relative h-12">
-                  <input
-                    type="text"
-                    placeholder=" "
-                    className="text-2xl font-bold input-like"
-                    name="title"
-                  />
-                  <label htmlFor="title">标题</label>
-                </h2>
-                <div className="relative h-32">
-                  <textarea
-                    name="detail"
-                    placeholder=" "
-                    className="resize-none input-like"
-                    // rows={6}
-                  />
-                  <label htmlFor="detail">详情</label>
+                <div
+                  className={clsx(
+                    "font-bold flex items-center justify-center h-36 w-28 rounded",
+                    // todo: 自定义是否添加阴影
+                    {
+                      "bg-white": images.length === 0,
+                    }
+                  )}
+                >
+                  {images.length === 0 ? (
+                    <div className="p-4">粘贴图片或将图片拖拽至此</div>
+                  ) : (
+                    <img
+                      className="rounded"
+                      src={URL.createObjectURL(images[0])}
+                      style={{
+                        transform: `scale(${scaleV}) translate(${translateXV},${translateYV})`,
+                      }}
+                    ></img>
+                  )}
+                </div>
+                <div
+                  className={clsx("border-l-2 border-white flex-[5] px-4 h-40")}
+                  // style={{ borderColor: `var(--${theme}-dark)`, }}
+                >
+                  <h2 className="relative h-12">
+                    <input
+                      type="text"
+                      placeholder=" "
+                      className="text-2xl font-bold input-like"
+                      name="title"
+                    />
+                    <label htmlFor="title">标题</label>
+                  </h2>
+                  <div className="relative h-32">
+                    <textarea
+                      name="detail"
+                      placeholder=" "
+                      className="resize-none input-like"
+                      // rows={6}
+                    />
+                    <label htmlFor="detail">详情</label>
+                  </div>
                 </div>
               </div>
+              {Array.from({ length: 30 }, (_, i) => i + 1).map((e) => (
+                <div
+                  className={clsx(
+                    " bg-white h-16 w-20 p-1 text-right font-bold inline-block",
+                    `text-${themeColor}-dark`
+                  )}
+                >
+                  {e}
+                </div>
+              ))}
             </div>
-            {Array.from({ length: 30 }, (_, i) => i + 1).map((e) => (
-              <div
-                className={clsx(
-                  " bg-white h-16 w-20 p-1 text-right font-bold inline-block",
-                  `text-${themeColor}-dark`
-                )}
-              >
-                {e}
-              </div>
-            ))}
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
