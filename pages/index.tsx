@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
 import clsx from "clsx";
-import * as Slider from "@radix-ui/react-slider";
 import ThemePicker from "../components/ThemePicker";
+import { MySlider } from "../components/MySlider";
+import Head from "next/head";
 
 export default function Home() {
-  const [theme, setTheme] = useState("plant");
+  const [themeColor, setThemeColor] = useState("plant");
   const [images, setImages] = useState([]);
   const [scale, setScale] = useState(50);
+  const [translateX, setTranslateX] = useState(50);
+  const [translateY, setTranslateY] = useState(50);
+
+  const getScaleValue = (v) => v / 50;
+  const getTraslateValue = (v) => v - 50 + "px";
+  const scaleV = getScaleValue(scale);
+  const translateXV = getTraslateValue(translateX);
+  const translateYV = getTraslateValue(translateY);
 
   useEffect(() => {
     // https://web.dev/patterns/files/
@@ -81,7 +90,7 @@ export default function Home() {
     <div
       className={clsx(
         "grid grid-cols-4 xl:grid-cols-5 print:grid-cols-3",
-        `text-${theme}`
+        `text-${themeColor}`
       )}
     >
       <aside className="pb-12 print:hidden">
@@ -89,7 +98,7 @@ export default function Home() {
           <div
             className={clsx(
               "flex gap-2 items-center text-2xl font-semibold tracking-tight",
-              `text-${theme}`
+              `text-${themeColor}`
             )}
           >
             <div
@@ -108,45 +117,36 @@ export default function Home() {
               ></path>
             </svg>`,
               }}
-            ></div>
+            />
             rainer
           </div>
         </div>
         <div className="px-8 space-y-4">
-          <ThemePicker activeTheme={theme} onChange={setTheme} />
-          <div>
-            <Slider.Root
-              className="col-span-2 flex relative items-center select-none  touch-none  h-8"
-              defaultValue={[50]}
-              max={100}
-              step={1}
-              onValueChange={(v) => {
-                setScale(v[0]);
-              }}
-              aria-label="Volume"
-            >
-              <Slider.Track
-                className={clsx(
-                  "relative flex-1 rounded-full h-2",
-                  ` bg-${theme}`
-                )}
-              >
-                <Slider.Range
-                  className={clsx(
-                    "absolute rounded-full h-full",
-                    `bg-${theme}-dark`
-                  )}
-                />
-              </Slider.Track>
-              <Slider.Thumb
-                className={clsx(
-                  "block w-4 h-4 shadow rounded focus:outline-none",
-                  `bg-${theme}-dark`
-                )}
-              />
-            </Slider.Root>
-            <div className="font-bold  text-sm ">缩放:{scale / 50}</div>
-          </div>
+          <ThemePicker activeTheme={themeColor} onChange={setThemeColor} />
+          <MySlider
+            label={`缩放：${scaleV}`}
+            theme={themeColor}
+            onValueChange={(v) => {
+              setScale(v[0]);
+            }}
+            value={scale}
+          />
+          <MySlider
+            label={`水平偏移：${translateXV}`}
+            theme={themeColor}
+            onValueChange={(v) => {
+              setTranslateX(v[0]);
+            }}
+            value={translateX}
+          />
+          <MySlider
+            label={`垂直偏移：${translateYV}`}
+            theme={themeColor}
+            onValueChange={(v) => {
+              setTranslateY(v[0]);
+            }}
+            value={translateY}
+          />
         </div>
       </aside>
       <div className="col-span-3 border-l border-l-slate-200 print:border-none  dark:border-l-slate-700 xl:col-span-4">
@@ -154,13 +154,13 @@ export default function Home() {
           <div
             className={
               "p-6 shadow-lg grid grid-cols-8 gap-2 " +
-              `text-${theme} bg-${theme}`
+              `text-${themeColor} bg-${themeColor}`
             }
           >
             <div
               className={clsx(
                 "p-4 inline-flex gap-4  row-span-3 col-span-6",
-                `border-[var(--${theme}-dark)]`
+                `border-[var(--${themeColor}-dark)]`
               )}
             >
               <div
@@ -173,15 +173,14 @@ export default function Home() {
                 )}
               >
                 {images.length === 0 ? (
-                  "粘贴图片"
+                  <div className="p-4">粘贴图片或将图片拖拽至此</div>
                 ) : (
                   <img
                     className="rounded"
                     src={URL.createObjectURL(images[0])}
-                    // 50 => 1.0
-                    // 0=>0
-                    // 100 =>2.0
-                    style={{ transform: `scale(${scale / 50})` }}
+                    style={{
+                      transform: `scale(${scaleV}) translate(${translateXV},${translateYV})`,
+                    }}
                   ></img>
                 )}
               </div>
@@ -213,7 +212,7 @@ export default function Home() {
               <div
                 className={clsx(
                   " bg-white h-16 w-20 p-1 text-right font-bold inline-block",
-                  `text-${theme}-dark`
+                  `text-${themeColor}-dark`
                 )}
               >
                 {e}
